@@ -9,11 +9,10 @@ tag=draft
 
 # Build Docker image
 build-image:
-	sudo docker build --no-cache=$(no_cache) -t="${name}:$(tag)" .
+	docker build --no-cache=$(no_cache) -t="${name}:$(tag)" .
 
 push-image:
-	sudo docker image push ${name}:$(tag)
-
+	docker image push ${name}:$(tag)
 
 up:
 	docker compose -f $(docker_compose_file) up -d --remove-orphans
