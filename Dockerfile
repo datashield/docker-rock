@@ -4,7 +4,7 @@
 # https://github.com/datashield/docker-rock
 #
 
-FROM obiba/rock:2.1.1-R4.4.2
+FROM obiba/rock:2.1.2-R4.4.2
 
 LABEL DataSHIELD <info@datashield.ac.uk>
 
