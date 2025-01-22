@@ -1,10 +1,10 @@
 #
-# Rock R Server Dockerfile with DataSHIELD Lemon Donkey profile
+# Rock R Server Dockerfile with DataSHIELD Margin Donkey profile
 #
 # https://github.com/datashield/docker-rock
 #
 
-# R 4.4.2, Rock 2.1.1
+# R 4.4.2, Rock 2.1.2
 FROM datashield/rock-base:6.3.1-R4.4.2
 
 ENV DSMEDIATION_VERSION=0.0.3
