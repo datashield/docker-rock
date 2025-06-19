@@ -4,8 +4,8 @@
 
 docker_compose_file=docker-compose.yml
 no_cache=true
-name=datashield/rock-margin-idiom-permissive
-tag=1.2.6
+name=datashield/rock-margin-devel-permissive
+tag=latest
 
 # Build Docker image
 build-image:

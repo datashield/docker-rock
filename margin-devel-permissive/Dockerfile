@@ -1,13 +1,13 @@
 #
-# Rock R Server Dockerfile with DataSHIELD Margin Hammer Permissive profile
+# Rock R Server Dockerfile with DataSHIELD Margin Devel Permissive profile
 #
 # https://github.com/datashield/docker-rock
 #
 
-# R 4.5.0, Rock 2.1.4
-FROM datashield/rock-margin-idiom:1.2.6
+# R 4.4.2, Rock 2.1.3
+FROM datashield/rock-margin-devel:latest
 
-ENV DSBASE_VERSION=v6.3.2-permissive
+ENV DSBASE_VERSION=v6.4.0-dev-permissive
 
 ENV ROCK_LIB=/var/lib/rock/R/library
 

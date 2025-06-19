@@ -1,7 +1,7 @@
 version: '3'
 services:
-  rock-margin-idiom-permissive:
-    image: datashield/rock-margin-idiom-permissive:1.2.6
+  rock-margin-devel-permissive:
+    image: datashield/rock-margin-devel-permissive:latest
     #build: .
     ports:
       - ${PORT}:8085

@@ -4,8 +4,8 @@
 
 docker_compose_file=docker-compose.yml
 no_cache=true
-name=datashield/rock-margin-idiom-permissive
-tag=1.2.6
+name=datashield/rock-margin-devel
+tag=latest
 
 # Build Docker image
 build-image:
@@ -13,6 +13,7 @@ build-image:
 
 push-image:
 	docker image push ${name}:$(tag)
+
 
 up:
 	docker compose -f $(docker_compose_file) up -d --remove-orphans
