@@ -4,7 +4,7 @@
 
 docker_compose_file=docker-compose.yml
 no_cache=true
-name=datashield/rock-margin-donkey
+name=datashield/rock-margin-donkey-permissive
 tag=draft
 
 # Build Docker image
@@ -13,7 +13,6 @@ build-image:
 
 push-image:
 	docker image push ${name}:$(tag)
-
 
 up:
 	docker compose -f $(docker_compose_file) up -d --remove-orphans

@@ -1,19 +1,19 @@
 #
-# Rock R Server Dockerfile with DataSHIELD Margin Donkey profile
+# Rock R Server Dockerfile with DataSHIELD Omicron Karma profile
 #
 # https://github.com/datashield/docker-rock
 #
 
-# R 4.4.2, Rock 2.1.2
-FROM datashield/rock-base:6.3.1-R4.4.2
+# R 4.5.0, Rock 2.1.1
+FROM datashield/rock-base:6.3.3
 
 ENV DSMEDIATION_VERSION=0.0.3
 ENV DSEXPOSOME_VERSION=2.0.9
-ENV DSTIDYVERSE_VERSION=v1.0.1
+ENV DSTIDYVERSE_VERSION=v1.0.4
 ENV DSOMICS_VERSION=v1.0.18-2
 ENV DSMTL_VERSION=0.9.9
 ENV DSSURVIVAL_VERSION=v2.1.3
-ENV DSBASE_VERSION=6.3.1
+ENV DSBASE_VERSION=6.3.3
 
 ENV ROCK_LIB=/var/lib/rock/R/library
 

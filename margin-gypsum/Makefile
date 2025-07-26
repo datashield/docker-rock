@@ -4,8 +4,8 @@
 
 docker_compose_file=docker-compose.yml
 no_cache=true
-name=datashield/rock-margin-donkey
-tag=draft
+name=datashield/rock-margin-gypsum
+tag=latest
 
 # Build Docker image
 build-image:
