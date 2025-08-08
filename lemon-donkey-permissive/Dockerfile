@@ -4,9 +4,9 @@
 # https://github.com/datashield/docker-rock
 #
 
-FROM datashield/rock-lemon-donkey:draft
+FROM datashield/rock-lemon-donkey:3.0.0
 
-ENV DSBASE_VERSION=v6.3.1-permissive
+ENV DSBASE_VERSION=v6.3.3-permissive
 
 ENV ROCK_LIB=/var/lib/rock/R/library
 

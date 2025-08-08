@@ -5,7 +5,7 @@
 docker_compose_file=docker-compose.yml
 no_cache=true
 name=datashield/rock-omicron-karma
-tag=1.0.0
+tag=devel
 
 # Build Docker image
 build-image:

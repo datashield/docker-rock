@@ -1,7 +1,7 @@
 version: '3'
 services:
   rock-omicron-karma-permissive:
-    image: datashield/rock-omicron-karma-permissive:draft
+    image: datashield/rock-omicron-karma-permissive:devel
     #build: .
     ports:
       - ${PORT}:8085
