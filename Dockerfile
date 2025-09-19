@@ -4,11 +4,11 @@
 # https://github.com/datashield/docker-rock
 #
 
-FROM obiba/rock:2.1.4-R4.5.0
+FROM obiba/rock:2.1.5-R4.5.1
 
 LABEL DataSHIELD=<info@datashield.ac.uk>
 
-ENV DSBASE_VERSION=6.3.3
+ENV DSBASE_VERSION=6.3.4
 ENV DSTIDYVERSE_VERSION=v1.0.4
 
 ENV ROCK_LIB=/var/lib/rock/R/library
