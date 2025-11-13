@@ -1,12 +1,12 @@
 #
-# Rock R Server Dockerfile with DataSHIELD Lemon Donkey permissive profile
+# Rock R Server Dockerfile with DataSHIELD Quebrada Lamda permissive profile
 #
 # https://github.com/datashield/docker-rock
 #
 
-FROM datashield/rock-lemon-donkey:draft
+FROM datashield/rock-quebrada-lamda:latest
 
-ENV DSBASE_VERSION=6.3.4-RC5-permissive
+ENV DSBASE_VERSION=v6.3.4-permissive
 
 ENV ROCK_LIB=/var/lib/rock/R/library
 

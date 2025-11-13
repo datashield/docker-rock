@@ -4,8 +4,8 @@
 
 docker_compose_file=docker-compose.yml
 no_cache=true
-name=datashield/rock-margin-idiom-permissive
-tag=2.1.1
+name=datashield/rock-quebrada-lamda-permissive
+tag=latest
 
 # Build Docker image
 build-image:
