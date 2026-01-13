@@ -4,8 +4,8 @@
 # https://github.com/datashield/docker-rock
 #
 
-# R 4.5.0, Rock 2.1.4
-FROM datashield/rock-margin-idiom:2.1.1
+# R 4.5.0, Rock 2.1.6
+FROM datashield/rock-margin-idiom:2.2.0
 
 ENV DSBASE_VERSION=v6.3.5-dev-permissive
 
