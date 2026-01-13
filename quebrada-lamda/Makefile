@@ -4,8 +4,8 @@
 
 docker_compose_file=docker-compose.yml
 no_cache=true
-name=datashield/rock-omicron-karma
-tag=devel
+name=datashield/rock-quebrada-lamda
+tag=latest
 
 # Build Docker image
 build-image:

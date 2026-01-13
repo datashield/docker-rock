@@ -1,7 +1,7 @@
 version: '3'
 services:
   rock-margin-idiom:
-    image: datashield/rock-margin-idiom:1.2.6
+    image: datashield/rock-margin-idiom:2.2.0
     #build: .
     ports:
       - ${PORT}:8085

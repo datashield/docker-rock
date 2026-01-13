@@ -1,7 +1,7 @@
 version: '3'
 services:
-  rock-omicron-karma-permissive:
-    image: datashield/rock-omicron-karma-permissive:devel
+  rock-quebrada-lamda-permissive:
+    image: datashield/rock-quebrada-lamda-permissive:latest
     #build: .
     ports:
       - ${PORT}:8085

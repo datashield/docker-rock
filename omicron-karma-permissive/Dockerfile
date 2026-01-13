@@ -4,9 +4,9 @@
 # https://github.com/datashield/docker-rock
 #
 
-FROM datashield/rock-omicron-karma:1.0.0
+FROM datashield/rock-omicron-karma:devel
 
-ENV DSBASE_VERSION=v6.3.3-permissive
+ENV DSBASE_VERSION=v6.3.4-dev-permissive
 
 ENV ROCK_LIB=/var/lib/rock/R/library
 
