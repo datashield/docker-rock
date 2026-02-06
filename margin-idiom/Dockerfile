@@ -4,11 +4,11 @@
 # https://github.com/datashield/docker-rock
 #
 
-# R 4.5.0, Rock 2.1.6
+# R 4.5.2, Rock 2.1.6
 FROM datashield/rock-base:6.3.4
 
-ENV DSTIDYVERSE_VERSION=v1.0.4
-ENV DSCODA_VERSION=v0.1.0-dev
+ENV DSTIDYVERSE_VERSION=v1.1.1
+ENV DSCODA_VERSION=v0.2.0-dev
 ENV DSSURVIVAL_VERSION=v2.3.0-dev
 ENV DSBASE_VERSION=v6.3.5-dev
 

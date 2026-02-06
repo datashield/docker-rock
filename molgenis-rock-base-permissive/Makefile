@@ -4,8 +4,8 @@
 
 docker_compose_file=docker-compose.yml
 no_cache=true
-name=datashield/rock-margin-idiom
-tag=2.2.1
+name=datashield/molgenis-rock-base-permissive
+tag=1.0.0
 
 # Build Docker image
 build-image:
