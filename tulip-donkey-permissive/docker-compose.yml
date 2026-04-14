@@ -1,7 +1,6 @@
-version: '3'
 services:
-  rock-margin-idiom:
-    image: datashield/rock-margin-idiom:2.2.1
+  rock-tulip-donkey-permissive:
+    image: datashield/rock-tulip-donkey-permissive:latest
     #build: .
     ports:
       - ${PORT}:8085
