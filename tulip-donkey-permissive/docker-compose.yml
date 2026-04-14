@@ -1,6 +1,6 @@
 services:
-  molgenis-rock-base:
-    image: datashield/molgenis-rock-base:3.0.0
+  rock-tulip-donkey-permissive:
+    image: datashield/rock-tulip-donkey-permissive:latest
     #build: .
     ports:
       - ${PORT}:8085

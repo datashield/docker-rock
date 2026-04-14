@@ -1,6 +1,7 @@
+version: '3'
 services:
-  molgenis-rock-base:
-    image: datashield/molgenis-rock-base:3.0.0
+  rock-rio-lamda-permissive:
+    image: datashield/rock-rio-lamda-permissive:latest
     #build: .
     ports:
       - ${PORT}:8085

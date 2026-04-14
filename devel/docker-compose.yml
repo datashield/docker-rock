@@ -1,6 +1,6 @@
 services:
-  molgenis-rock-base:
-    image: datashield/molgenis-rock-base:3.0.0
+  rock-devel:
+    image: datashield/rock_devel:1.1.0
     #build: .
     ports:
       - ${PORT}:8085

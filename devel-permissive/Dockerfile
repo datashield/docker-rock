@@ -1,11 +1,11 @@
 #
-# Rock R Server Dockerfile for 'molgenis rock base permissive' profile
+# Rock R Server Dockerfile for 'rock devel permissive' profile
 #
 # https://github.com/datashield/docker-rock
 #
 
-# Use 'datashield/molgenis-rock-base:3.0.0'
-FROM datashield/molgenis-rock-base:3.0.0
+# Use 'datashield/rock_devel:1.1.0'
+FROM datashield/rock_devel:1.1.0
 
 ENV DSBASE_VERSION=v6.3.5-permissive
 

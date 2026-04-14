@@ -4,8 +4,8 @@
 
 docker_compose_file=docker-compose.yml
 no_cache=true
-name=datashield/molgenis-rock-base-permissive
-tag=3.0.0
+name=datashield/rock-tulip-docker-permissive
+tag=1.0.0
 
 # Build Docker image
 build-image:

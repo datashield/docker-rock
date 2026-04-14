@@ -1,20 +1,15 @@
 #
-# Rock R Server Dockerfile for 'molgenis rock base permissive' profile
+# Rock R Server Dockerfile with DataSHIELD Tulip Donkey permissive profile
 #
 # https://github.com/datashield/docker-rock
 #
 
-# Use 'datashield/molgenis-rock-base:3.0.0'
-FROM datashield/molgenis-rock-base:3.0.0
+FROM datashield/rock-tulip-donkey:1.0.0
 
 ENV DSBASE_VERSION=v6.3.5-permissive
 
 ENV ROCK_LIB=/var/lib/rock/R/library
 
-# Create Labels
-
-LABEL dsBase=$DSBASE_VERSION
-
-# Update of packages - dsBase
+# dsBase
 RUN Rscript -e "remotes::install_github('datashield/dsBase', ref = '$DSBASE_VERSION', dependencies = TRUE, upgrade = FALSE, lib = '$ROCK_LIB')" && \
-    chown -R rock $ROCK_LIB
+  chown -R rock $ROCK_LIB
