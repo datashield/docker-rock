@@ -4,7 +4,7 @@
 # https://github.com/datashield/docker-rock
 #
 
-FROM datashield/rock-tulip-donkey:1.0.0
+FROM datashield/rock-tulip-donkey:2.0.0
 
 ENV DSBASE_VERSION=v6.3.5-permissive
 

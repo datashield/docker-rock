@@ -1,6 +1,6 @@
 services:
   rock-tulip-donkey-permissive:
-    image: datashield/rock-tulip-donkey-permissive:latest
+    image: datashield/rock-tulip-donkey-permissive:2.0.0
     #build: .
     ports:
       - ${PORT}:8085
