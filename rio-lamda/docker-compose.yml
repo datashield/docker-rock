@@ -1,7 +1,7 @@
 version: '3'
 services:
-  rock-margin-idiom:
-    image: datashield/rock-margin-idiom:2.2.1
+  rock-rio-lamda:
+    image: datashield/rock-rio-lamda:latest
     #build: .
     ports:
       - ${PORT}:8085
