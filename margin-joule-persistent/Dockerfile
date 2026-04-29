@@ -4,10 +4,10 @@
 # https://github.com/datashield/docker-rock
 #
 
-# R 4.5.0, Rock 2.1.3
-FROM datashield/rock-margin-joule:1.0.0
+# R 4.5.2, Rock 2.2.0
+FROM datashield/rock-margin-joule:2.0.0
 
-ENV DSBASE_VERSION=v6.3.2-permissive
+ENV DSBASE_VERSION=v6.3.5-permissive
 
 ENV ROCK_LIB=/var/lib/rock/R/library
 

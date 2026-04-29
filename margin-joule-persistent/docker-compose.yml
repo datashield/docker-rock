@@ -1,7 +1,7 @@
 version: '3'
 services:
   rock-margin-joule-permissive:
-    image: datashield/rock-margin-joule-permissive:1.0.0
+    image: datashield/rock-margin-joule-permissive:2.0.0
     #build: .
     ports:
       - ${PORT}:8085

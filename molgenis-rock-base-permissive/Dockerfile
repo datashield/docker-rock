@@ -5,7 +5,7 @@
 #
 
 # Use 'datashield/molgenis-rock-base:3.0.0'
-FROM datashield/molgenis-rock-base:3.0.0
+FROM datashield/molgenis-rock-base:4.0.0
 
 ENV DSBASE_VERSION=v6.3.5-permissive
 
