@@ -4,18 +4,18 @@
 # https://github.com/datashield/docker-rock
 #
 
-# R 4.4.2, Rock 2.1.3
-FROM datashield/rock-base:6.3.1-R4.4.2
+# R 4.4.2, Rock 2.2.0
+FROM datashield/rock-base:6.3.5-R4.5.2
 
-ENV DSML_VERSION=1.0.0
-ENV DSTIDYVERSE_VERSION=v1.0.4
-ENV DSBASE_VERSION=v6.3.1
+ENV DSML_VERSION=1.0.1
+ENV DSTIDYVERSE_VERSION=v1.2.0
+ENV DSBASE_VERSION=6.3.5
 
 ENV ROCK_LIB=/var/lib/rock/R/library
 
 # Update of packages
-RUN apt-get update -y; apt-get upgrade -y; apt-get autoremove -y
-RUN R -q -e "install.packages('ranger')"; R -q -e "update.packages()"
+RUN apt-get update -y; apt-get upgrade -y; apt-get autoremove -y; apt-get clean all -y && \
+    R -q -e "install.packages('ranger')"; R -q -e "update.packages()"
 
 # Install new R packages
 # dsTidyverse
