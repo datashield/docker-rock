@@ -5,7 +5,7 @@
 docker_compose_file=docker-compose.yml
 no_cache=true
 name=datashield/rock-tulip-donkey
-tag=2.0.0
+tag=5.0.0
 
 # Build Docker image
 build-image:
@@ -13,7 +13,6 @@ build-image:
 
 push-image:
 	docker image push ${name}:$(tag)
-
 
 up:
 	docker compose -f $(docker_compose_file) up -d --remove-orphans

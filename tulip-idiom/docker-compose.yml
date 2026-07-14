@@ -1,6 +1,7 @@
+version: '3'
 services:
-  rock-tulip-donkey:
-    image: datashield/rock-tulip-donkey:5.0.0
+  rock-tulip-idiom:
+    image: datashield/rock-tulip-idiom:1.0.0
     #build: .
     ports:
       - ${PORT}:8085
