@@ -1,7 +1,7 @@
 version: '3'
 services:
   rock-tulip-devel:
-    image: datashield/rock-tulip-devel:1.0.0
+    image: datashield/rock-tulip-devel:1.1.0
     #build: .
     ports:
       - ${PORT}:8085

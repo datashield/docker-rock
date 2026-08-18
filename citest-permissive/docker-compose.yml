@@ -1,6 +1,6 @@
 services:
-  rock-tulip-devel-permissive:
-    image: datashield/rock-tulip-devel-permissive:1.1.0
+  rock_citest-permissive:
+    image: datashield/rock_citest-permissive:4.0.0
     #build: .
     ports:
       - ${PORT}:8085

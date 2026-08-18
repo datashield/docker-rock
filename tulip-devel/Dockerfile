@@ -16,9 +16,9 @@ LABEL dsTidyverse=${DSTIDYVERSE_VERSION}
 LABEL dsBase=${DSBASE_VERSION}
 
 # Update of packages
-RUN apt-get update -y \
- && apt-get upgrade -y \
- && R -q -e "update.packages()"
+# RUN apt-get update -y \
+#  && apt-get upgrade -y \
+#  && R -q -e "update.packages()"
 
 # Install new R packages
 # dsTidyverse

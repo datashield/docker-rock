@@ -4,8 +4,8 @@
 # https://github.com/datashield/docker-rock
 #
 
-# R 4.5.3, Rock 2.2.1
-FROM datashield/rock-base:6.3.5-R4.5.3
+# R 4.6.1, Rock 2.2.1
+FROM datashield/rock-base:6.3.5-R4.6.1
 
 ENV DSMEDIATION_VERSION=0.0.3
 ENV DSEXPOSOME_VERSION=2.0.9
