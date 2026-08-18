@@ -4,8 +4,8 @@
 
 docker_compose_file=docker-compose.yml
 no_cache=true
-name=datashield/rock-tulip-donkey
-tag=6.0.0
+name=datashield/rock_citest-permissive
+tag=4.0.0
 
 # Build Docker image
 build-image:
