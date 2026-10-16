@@ -8,6 +8,13 @@ jobs:
   push_to_registry:
     name: Push Docker image to Docker Hub
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - variant: ''
+            latest: auto
+          - variant: '-native'
+            latest: 'false'
     env:
       REGISTRY: index.docker.io
       IMAGE_NAME: datashield/rock-base
@@ -31,6 +38,9 @@ jobs:
         uses: docker/metadata-action@v5
         with:
           images: ${{ env.IMAGE_NAME }}
+          flavor: |
+            latest=${{ matrix.latest }}
+            suffix=${{ matrix.variant }}
           tags: |
             type=match,pattern=\d+.\d+.\d+-R\d+.\d+.\d+
             type=match,pattern=\d+.\d+.\d+-R\d+.\d+
@@ -45,6 +55,7 @@ jobs:
         with:
           context: .
           file: ./Dockerfile
+          build-args: VARIANT=${{ matrix.variant }}
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}

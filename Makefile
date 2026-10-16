@@ -18,6 +18,10 @@ all:
 build-image:
 	docker build --no-cache=$(no_cache) -t="datashield/rock-base:$(tag)" .
 
+# Build the native executable variant
+build-image-native:
+	docker build --no-cache=$(no_cache) --build-arg VARIANT=-native -t="datashield/rock-base:$(tag)-native" .
+
 push-image:
 	docker image push datashield/rock-base:$(tag)
 
