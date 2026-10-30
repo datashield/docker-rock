@@ -1,0 +1,23 @@
+version: '3'
+services:
+  rock-base:
+    image: datashield/rock-base:latest
+    #build: .
+    ports:
+      - ${PORT}:8085
+    environment:
+      - ROCK_ADMINISTRATOR_NAME=${ROCK_ADMINISTRATOR_NAME}
+      - ROCK_ADMINISTRATOR_PASSWORD=${ROCK_ADMINISTRATOR_PASSWORD}
+      - ROCK_MANAGER_NAME=${ROCK_MANAGER_NAME}
+      - ROCK_MANAGER_PASSWORD=${ROCK_MANAGER_PASSWORD}
+      - ROCK_USER_NAME=${ROCK_USER_NAME}
+      - ROCK_USER_PASSWORD=${ROCK_USER_PASSWORD}
+      - ROCK_ID=${ROCK_ID}
+      - ROCK_CLUSTER=${ROCK_CLUSTER}
+      - ROCK_TAGS=${ROCK_TAGS}
+      # for self-registration
+      #- ROCK_SERVER=${ROCK_SERVER}
+      #- ROCK_OPAL_SERVER=${ROCK_OPAL_SERVER}
+      #- ROCK_OPAL_TOKEN=${ROCK_OPAL_TOKEN}
+    volumes:
+      - ${PROJECT_HOME}/rock_home:/srv
