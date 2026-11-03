@@ -1,0 +1,165 @@
+name: Publish DataSHIELD profile image
+
+# Release a profile image by pushing a tag named <folder>/<version>, e.g.:
+#   git tag margin-joule/2.0.0 && git push origin margin-joule/2.0.0
+# The image name is read from the folder's Makefile. rock-base has its own workflow.
+on:
+  push:
+    tags: ['*/*']
+  workflow_dispatch:
+    inputs:
+      folder:
+        description: 'Image folder (e.g. margin-joule)'
+        required: true
+      version:
+        description: 'Image tag (e.g. 2.0.0)'
+        required: true
+
+env:
+  REGISTRY: index.docker.io
+
+jobs:
+  # Resolve image name, tags and the architectures supported by the base image
+  setup:
+    name: Resolve image to publish
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    outputs:
+      folder: ${{ steps.resolve.outputs.folder }}
+      image: ${{ steps.resolve.outputs.image }}
+      tags: ${{ steps.resolve.outputs.tags }}
+      matrix: ${{ steps.resolve.outputs.matrix }}
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v4
+
+      - name: Resolve folder, image, tags and platforms
+        id: resolve
+        env:
+          FOLDER: ${{ inputs.folder || github.ref_name }}
+          VERSION: ${{ inputs.version }}
+        run: |
+          folder="${FOLDER%%/*}"
+          version="${VERSION:-${FOLDER#*/}}"
+          case "$folder" in
+            rock-base|molgenis-*) echo "::error::$folder is not published by this workflow"; exit 1 ;;
+          esac
+          test -f "$folder/Dockerfile" || { echo "::error::No Dockerfile in $folder"; exit 1; }
+          image=$(sed -n 's/^name=//p' "$folder/Makefile")
+          test -n "$image" || { echo "::error::No name= in $folder/Makefile"; exit 1; }
+          tags="$image:$version"
+          # numeric versions also move latest, non-numeric ones (draft, devel...) do not
+          [[ "$version" =~ ^[0-9]+(\.[0-9]+)*$ ]] && tags="$tags,$image:latest"
+          # build only for the architectures the base image provides (old bases are amd64 only)
+          base=$(awk '/^FROM/ {print $2; exit}' "$folder/Dockerfile")
+          matrix=$(docker buildx imagetools inspect --raw "$base" | jq -c '
+            [(.manifests // [{platform: {os: "linux", architecture: "amd64"}}])[].platform
+              | select(.os == "linux" and (.architecture == "amd64" or .architecture == "arm64")) | .architecture]
+            | unique | map({arch: ., runner: (if . == "arm64" then "ubuntu-24.04-arm" else "ubuntu-24.04" end)})')
+          echo "Publishing $tags from $folder (base $base) for $matrix"
+          {
+            echo "folder=$folder"
+            echo "image=$image"
+            echo "tags=$tags"
+            echo "matrix=$matrix"
+          } >> "$GITHUB_OUTPUT"
+
+  # Build natively on each architecture, pushed by digest
+  build:
+    name: Build image for ${{ matrix.platform.arch }}
+    runs-on: ${{ matrix.platform.runner }}
+    needs: setup
+    strategy:
+      matrix:
+        platform: ${{ fromJSON(needs.setup.outputs.matrix) }}
+    permissions:
+      contents: read
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_TOKEN }}
+
+      - name: Extract metadata (labels) for Docker
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ needs.setup.outputs.image }}
+
+      - name: Build and push Docker image by digest
+        id: push
+        uses: docker/build-push-action@v5
+        with:
+          context: ${{ needs.setup.outputs.folder }}
+          file: ${{ needs.setup.outputs.folder }}/Dockerfile
+          platforms: linux/${{ matrix.platform.arch }}
+          labels: ${{ steps.meta.outputs.labels }}
+          outputs: type=image,name=${{ needs.setup.outputs.image }},push-by-digest=true,name-canonical=true,push=true
+
+      - name: Export digest
+        run: |
+          mkdir -p /tmp/digests
+          digest="${{ steps.push.outputs.digest }}"
+          touch "/tmp/digests/${digest#sha256:}"
+
+      - name: Upload digest
+        uses: actions/upload-artifact@v4
+        with:
+          name: digests-${{ matrix.platform.arch }}
+          path: /tmp/digests/*
+          if-no-files-found: error
+          retention-days: 1
+
+  # Combine the per-architecture images into one tagged multi-arch image
+  merge:
+    name: Push multi-arch image to Docker Hub
+    runs-on: ubuntu-latest
+    needs: [setup, build]
+    permissions:
+      id-token: write
+      contents: read
+      attestations: write
+      packages: write
+    steps:
+      - name: Download digests
+        uses: actions/download-artifact@v4
+        with:
+          path: /tmp/digests
+          pattern: digests-*
+          merge-multiple: true
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_TOKEN }}
+
+      - name: Create and push manifest list
+        id: push
+        working-directory: /tmp/digests
+        env:
+          IMAGE: ${{ needs.setup.outputs.image }}
+          TAGS: ${{ needs.setup.outputs.tags }}
+        run: |
+          docker buildx imagetools create $(tr ',' '\n' <<< "$TAGS" | sed 's/^/-t /') \
+            $(printf "$IMAGE@sha256:%s " *)
+          digest=$(docker buildx imagetools inspect "${TAGS%%,*}" --format '{{json .Manifest}}' | jq -r .digest)
+          echo "digest=$digest" >> "$GITHUB_OUTPUT"
+
+      - name: Generate artifact attestation
+        uses: actions/attest-build-provenance@v1
+        with:
+          subject-name: ${{ env.REGISTRY }}/${{ needs.setup.outputs.image }}
+          subject-digest: ${{ steps.push.outputs.digest }}
+          push-to-registry: false
