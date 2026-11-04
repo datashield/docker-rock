@@ -22,6 +22,7 @@ ARG DSGEOSPATIAL_REF
 ARG DSGEOSPATIAL_LAB
 ARG CACHEBUST=0
 ENV ROCK_LIB=/var/lib/rock/R/library
+ENV R_LIBS_SITE=${ROCK_LIB}
 
 USER root
 
@@ -47,14 +48,20 @@ RUN apt-get update && \
 # ---------------------------------------------------------------------------
 # R DEPENDENCIES
 # ---------------------------------------------------------------------------
-# units requires a sufficiently recent Rcpp.
-RUN R -e "install.packages('Rcpp', repos='https://cloud.r-project.org'); \
-          stopifnot(packageVersion('Rcpp') >= '1.1.0')"
-RUN R -e "install.packages('units', repos='https://cloud.r-project.org'); \
-          stopifnot(requireNamespace('units', quietly=TRUE))"
-RUN R -e "install.packages('spdep', repos='https://cloud.r-project.org'); \
-          stopifnot(requireNamespace('spdep', quietly=TRUE))"
-RUN R -e "install.packages('remotes', repos='https://cloud.r-project.org')"
+RUN Rscript -e "\
+    install.packages( \
+        c('Rcpp', 'units', 'spdep', 'remotes'), \
+        lib = Sys.getenv('ROCK_LIB'), \
+        repos = 'https://cloud.r-project.org' \
+    )"
+
+RUN R_LIBS_SITE="${ROCK_LIB}" Rscript -e "\
+    stopifnot( \
+        requireNamespace('Rcpp', quietly=TRUE), \
+        requireNamespace('units', quietly=TRUE), \
+        requireNamespace('spdep', quietly=TRUE), \
+        requireNamespace('remotes', quietly=TRUE) \
+    )"
 
 # ---------------------------------------------------------------------------
 # DATASHIELD PACKAGE VALIDATION

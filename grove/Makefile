@@ -6,7 +6,7 @@ name ?= datashield/rock-grove
 tag ?= 0.0.0.9000
 
 # Docker build configuration
-no_cache ?= true
+no_cache ?= false
 platform ?= linux/amd64
 
 # Base Rock image
