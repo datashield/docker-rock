@@ -43,7 +43,10 @@ remove-image:
 # ---------------------------------------------------------------------------
 # DOCKER COMPOSE
 # ---------------------------------------------------------------------------
-up:
+config:
+	docker compose -f $(docker_compose_file) config
+
+up: config
 	docker compose -f $(docker_compose_file) up -d --remove-orphans
 
 down:
@@ -88,4 +91,4 @@ clean:
 	rm -rf target
 
 .PHONY: build-image push-image publish remove-image \
-	up down stop start restart pull logs build check clean
+	config up down stop start restart pull logs build check clean
