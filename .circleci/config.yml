@@ -1,0 +1,134 @@
+version: 2.1
+
+jobs:
+
+  validate-images:
+    machine:
+      image: ubuntu-2204:current
+
+    steps:
+      - checkout
+
+      - run:
+          name: Validate changed image directories
+          command: |
+            set -e
+
+            git fetch origin main
+
+            CHANGED_DIRS=$(
+              git diff --name-only origin/main...HEAD \
+                | cut -d/ -f1 \
+                | sort -u
+            )
+
+            echo "Changed directories:"
+            echo "$CHANGED_DIRS"
+
+            FOUND_IMAGE=false
+
+            for dir in $CHANGED_DIRS
+            do
+              if [ -d "$dir" ] && \
+                 [ -f "$dir/Dockerfile" ] && \
+                 [ -f "$dir/Makefile" ]
+              then
+
+                FOUND_IMAGE=true
+
+                echo ""
+                echo "Validating $dir"
+
+                grep -q "^name=" "$dir/Makefile" || \
+                  (echo "Missing name= in $dir/Makefile" && exit 1)
+
+                grep -q "^tag=" "$dir/Makefile" || \
+                  (echo "Missing tag= in $dir/Makefile" && exit 1)
+
+                IMAGE_NAME=$(grep "^name=" "$dir/Makefile" | cut -d= -f2)
+                IMAGE_TAG=$(grep "^tag=" "$dir/Makefile" | cut -d= -f2)
+
+                echo "Found image: $IMAGE_NAME:$IMAGE_TAG"
+
+                if docker manifest inspect "$IMAGE_NAME:$IMAGE_TAG" >/dev/null 2>&1
+                then
+                  echo ""
+                  echo "ERROR:"
+                  echo "Image already exists:"
+                  echo "$IMAGE_NAME:$IMAGE_TAG"
+                  exit 1
+                fi
+
+              fi
+            done
+
+            if [ "$FOUND_IMAGE" = false ]
+            then
+              echo "No Docker images modified."
+            fi
+
+  build-and-push-images:
+    machine:
+      image: ubuntu-2204:current
+
+    steps:
+      - checkout
+
+      - run:
+          name: Docker Login
+          command: |
+            echo "$DOCKER_PASSWORD" | docker login \
+              -u "$DOCKER_USERNAME" \
+              --password-stdin
+
+      - run:
+          name: Detect and build changed images
+          command: |
+            set -e
+
+            CHANGED_DIRS=$(
+              git diff --name-only HEAD~1 HEAD \
+                | cut -d/ -f1 \
+                | sort -u
+            )
+
+            echo "Changed directories:"
+            echo "$CHANGED_DIRS"
+
+            for dir in $CHANGED_DIRS
+            do
+              if [ -d "$dir" ] && \
+                 [ -f "$dir/Dockerfile" ] && \
+                 [ -f "$dir/Makefile" ]
+              then
+
+                echo ""
+                echo "Building $dir"
+
+                (
+                  cd "$dir"
+
+                  make build-image
+                  make push-image
+                )
+              fi
+            done
+
+workflows:
+  version: 2
+
+  validate-pull-request:
+    jobs:
+      - validate-images:
+          filters:
+            branches:
+              ignore:
+                - main
+
+  build-on-main:
+    jobs:
+      - build-and-push-images:
+          filters:
+            branches:
+              only:
+                - main
