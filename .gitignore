@@ -5,3 +5,4 @@ target
 *.Rproj.user
 *.Rproj
 *.DS_Store
+*.html
