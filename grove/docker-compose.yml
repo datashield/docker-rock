@@ -14,6 +14,9 @@ services:
       ROCK_ID: ${ROCK_ID:-rock-grove-01}
       ROCK_CLUSTER: ${ROCK_CLUSTER:-GROVE}
       ROCK_TAGS: ${ROCK_TAGS:-grove,geospatial,tidyverse}
+      ROCK_SERVER: ${ROCK_SERVER:-}
+      ROCK_OPAL_SERVER: ${ROCK_OPAL_SERVER:-}
+      ROCK_OPAL_TOKEN: ${ROCK_OPAL_TOKEN:-}
 
     volumes:
       - rock_home:/srv

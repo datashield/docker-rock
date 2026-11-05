@@ -2,6 +2,7 @@
 # GLOBAL VARIABLES
 # ---------------------------------------------------------------------------
 docker_compose_file ?= docker-compose.yml
+docker_compose_opal_file ?= docker-compose.opal-network.yml
 name ?= datashield/rock-grove
 tag ?= 0.0.0.9000
 
@@ -71,6 +72,24 @@ build:
 	docker compose -f $(docker_compose_file) build --no-cache
 
 # ---------------------------------------------------------------------------
+# OPAL INTEGRATION (Opal already running as a container on the same Docker host)
+# ---------------------------------------------------------------------------
+# Attach the running grove container to Opal's network (auto-detected).
+# Pass options with e.g.:  make connect-opal connect_args="--opal my-opal --network my_net"
+connect_args ?=
+connect-opal:
+	bash scripts/connect-opal.sh $(connect_args)
+
+# Detach it again
+disconnect-opal:
+	bash scripts/connect-opal.sh --remove --no-verify $(connect_args)
+
+# Start grove already joined to Opal's network (requires OPAL_NETWORK in .env or the environment)
+up-opal:
+	docker compose -f $(docker_compose_file) -f $(docker_compose_opal_file) config > /dev/null
+	docker compose -f $(docker_compose_file) -f $(docker_compose_opal_file) up -d --remove-orphans
+
+# ---------------------------------------------------------------------------
 # VALIDATION
 # ---------------------------------------------------------------------------
 check:
@@ -91,4 +110,5 @@ clean:
 	rm -rf target
 
 .PHONY: build-image push-image publish remove-image \
-	config up down stop start restart pull logs build check clean
+	config up down stop start restart pull logs build \
+	connect-opal disconnect-opal up-opal check clean

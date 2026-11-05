@@ -1,0 +1,23 @@
+# Optional override: join grove to the Docker network of an already-running Opal.
+#
+# Declarative alternative to scripts/connect-opal.sh. Because it is part of the
+# compose definition, the attachment survives container re-creation.
+#
+#   1. Find Opal's network:  docker inspect -f '{{range $k,$_ := .NetworkSettings.Networks}}{{println $k}}{{end}}' <opal-container>
+#   2. Put it in .env:       OPAL_NETWORK=<that name>
+#   3. Start grove:          make up-opal
+#      (= docker compose -f docker-compose.yml -f docker-compose.opal-network.yml up -d)
+#
+# In Opal, register the Rock as  rock-grove:8085  (Administration > Apps > Discovery).
+services:
+  rock-grove:
+    networks:
+      default: {}
+      opal:
+        aliases:
+          - ${GROVE_ALIAS:-rock-grove}
+
+networks:
+  opal:
+    name: ${OPAL_NETWORK:?Set OPAL_NETWORK to the name of Opal's Docker network}
+    external: true
