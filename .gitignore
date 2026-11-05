@@ -2,3 +2,7 @@
 target
 .idea
 *.iml
+*.Rproj.user
+*.Rproj
+*.DS_Store
+*.html
