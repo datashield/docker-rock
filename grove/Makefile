@@ -3,7 +3,7 @@
 # ---------------------------------------------------------------------------
 docker_compose_file ?= docker-compose.yml
 docker_compose_opal_file ?= docker-compose.opal-network.yml
-name ?= datashield/rock-grove
+name=datashield/rock-grove
 tag ?= 0.0.0.9000
 
 # Docker build configuration

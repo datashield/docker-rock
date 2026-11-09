@@ -6,16 +6,14 @@
 # ---------------------------------------------------------------------------
 # GLOBAL VARIABLES
 # ---------------------------------------------------------------------------
-# Existing Rock image containing dsBase and dsTidyverse.
-ARG ROCK_BASE_IMAGE=datashield/rock-base:6.3.5-R4.6.1
-
 # GitHub repository and version of dsGeospatial.
 ARG DSGEOSPATIAL_REPO=FederatedMethods/dsGeospatial
 # IMPORTANT: Supply a release tag or commit SHA at build time.
 ARG DSGEOSPATIAL_REF=642accd139054eb94d54bdca673957ae95689122
 ARG DSGEOSPATIAL_LAB=0.0.0.9000
 
-FROM ${ROCK_BASE_IMAGE}
+# Existing Rock image containing dsBase and dsTidyverse.
+FROM datashield/rock-base:6.3.5-R4.6.1
 
 ARG DSGEOSPATIAL_REPO
 ARG DSGEOSPATIAL_REF
