@@ -13,7 +13,7 @@ ARG DSGEOSPATIAL_REF=755928247c4e9c520bf7af364999d4ce263ee461
 ARG DSGEOSPATIAL_LAB=0.0.0.9000
 
 # Existing Rock image containing dsBase and dsTidyverse.
-FROM datashield/rock-base:6.3.5-R4.6.1
+FROM datashield/rock-base-6.3.5-R4.6.1-1
 
 ARG DSGEOSPATIAL_REPO
 ARG DSGEOSPATIAL_REF

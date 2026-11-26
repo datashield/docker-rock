@@ -11,7 +11,7 @@ no_cache ?= false
 platform ?= linux/amd64
 
 # Base Rock image
-rock_base_image ?= datashield/rock-base:6.3.5-R4.6.1
+rock_base_image ?= datashield/rock-base-6.3.5-R4.6.1-1
 
 # dsGeospatial version (release tag or commit SHA)
 dsgeospatial_repo ?= FederatedMethods/dsGeospatial
