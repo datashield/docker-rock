@@ -5,7 +5,7 @@
 docker_compose_file=docker-compose.yml
 no_cache=true
 name=datashield/rock-lemon-donkey
-tag=draft
+tag=5.0.0
 
 # Build Docker image
 build-image:

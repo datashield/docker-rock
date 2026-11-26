@@ -1,7 +1,7 @@
 version: '3'
 services:
   rock-lemon-donkey:
-    image: datashield/rock-lemon-donkey:draft
+    image: datashield/rock-lemon-donkey:5.0.0
     #build: .
     ports:
       - ${PORT}:8085

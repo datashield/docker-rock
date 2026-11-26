@@ -1,6 +1,6 @@
 services:
   molgenis-rock-base-permissive:
-    image: datashield/molgenis-rock-base-permissive:4.1.0
+    image: datashield/molgenis-rock-base-permissive:5.0.0
     #build: .
     ports:
       - ${PORT}:8085
