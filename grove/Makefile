@@ -15,7 +15,7 @@ rock_base_image ?= datashield/rock-base:6.3.5-R4.6.1
 
 # dsGeospatial version (release tag or commit SHA)
 dsgeospatial_repo ?= FederatedMethods/dsGeospatial
-dsgeospatial_ref ?= 642accd139054eb94d54bdca673957ae95689122
+dsgeospatial_ref ?= 755928247c4e9c520bf7af364999d4ce263ee461
 
 # ---------------------------------------------------------------------------
 # DOCKER IMAGE
